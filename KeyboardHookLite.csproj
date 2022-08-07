@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk ">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+	<!--UseWPF property is required to bring in System.Windows.Input
+	This is because our project needs to reference the above namespace
+	The above DLL is part of the WPF framework
+	
+	We are not bound by System.Windows.Forms, so therefore this library
+	should also work with WINUI3 and modern UI Frameworks--> 
+	<UseWPF>true</UseWPF>
+	  
+  </PropertyGroup>
+
+</Project>
