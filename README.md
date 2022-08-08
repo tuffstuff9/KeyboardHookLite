@@ -1,6 +1,33 @@
-# <img src="https://user-images.githubusercontent.com/57072903/183295348-10681b7e-7a29-4018-9276-589a039d5ace.png#gh-light-mode-only" class="center"> <img src="https://user-images.githubusercontent.com/57072903/183296638-86803419-9891-4bb0-be61-101605e318a6.png#gh-dark-mode-only" class="center">
+<img src="https://user-images.githubusercontent.com/57072903/183416319-9f35f51c-d322-417f-a5c8-f5288a0a9c9e.svg#gh-light-mode-only" width="600px"> 
+<img src="https://user-images.githubusercontent.com/57072903/183415708-a49e3da4-e0ef-4792-9999-cca6613283c3.svg#gh-dark-mode-only" width="600px">
+
+<p>
+    <a href="https://www.nuget.org/packages/KeyboardHookLite">
+        <img src="https://img.shields.io/nuget/v/KeyboardHookLite?style=for-the-badge" alt="NuGet Version">
+    </a>
+ <a href="https://www.nuget.org/packages/KeyboardHookLite">
+  <img src="https://img.shields.io/nuget/dt/KeyboardHookLite?style=for-the-badge" alt="Target Framework">
+ </a>
+ <a href="https://github.com/giosali/HotkeyUtility/blob/main/HotkeyUtility/HotkeyUtility.csproj">
+        <img src="https://img.shields.io/badge/target-net6.0-blue?style=for-the-badge&color=%23512bd4" alt="Target Framework">
+    </a>
+ 
+ <a href="https://github.com/tuffstuff9/KeyboardHookLite/blob/master/LICENSE.txt">
+        <img src="https://img.shields.io/github/license/tuffstuff9/KeyboardHookLite?style=for-the-badge" alt="Target Framework">
+    </a>
+    
+</p>
+
+<p>
+ 
+ 
+
+</p>
+
+
 
 ## 🎯 Features
+
 
  - Lightweight low-level global keyboard hook with minimal dependencies.
  - Designed to work with modern UI frameworks (WPF, MAUI, WinUI 3) out of the box - no fiddling with outdated namespaces and Key types.
