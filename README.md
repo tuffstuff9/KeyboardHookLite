@@ -8,7 +8,7 @@
  <a href="https://www.nuget.org/packages/KeyboardHookLite">
   <img src="https://img.shields.io/nuget/dt/KeyboardHookLite?style=for-the-badge" alt="Target Framework">
  </a>
- <a href="https://github.com/giosali/HotkeyUtility/blob/main/HotkeyUtility/HotkeyUtility.csproj">
+ <a href="https://github.com/tuffstuff9/KeyboardHookLite/blob/a19121592231c060c247823e6bd8701751706596/KeyboardHookLite.csproj#L5">
         <img src="https://img.shields.io/badge/target-net6.0-blue?style=for-the-badge&color=%23512bd4" alt="Target Framework">
     </a>
  
