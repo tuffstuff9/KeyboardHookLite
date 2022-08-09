@@ -50,12 +50,13 @@ It is essentially the same as the code for the console application above. You ca
 
 ### KeyboardHookEventArgs features
 
-`KeyboardHookEventArgs` contains the property `InputEvent` which is of type `LowLevelKeyboardInputEvent`. See below for what that entails. If you would like to add further functionality, you can do so by adding properties to `KeyboardHookEventArgs`.
-<img src="https://user-images.githubusercontent.com/57072903/183413214-6d8e1f0d-5f60-47c7-b091-fd5e2bffc879.png" class="center" width="800px">
+`KeyboardHookEventArgs` contains the property `KeyPressType` and `InputEvent` which is of type `LowLevelKeyboardInputEvent`. See below for what that entails. If you would like to add further functionality, you can do so by adding properties to `KeyboardHookEventArgs`.
+<img src="https://user-images.githubusercontent.com/57072903/183647600-5ab9fc21-5783-44fc-8649-2a413b43658e.png" class="center" width="800px">
 
 ## License
 
 MIT
+
 
 
 
