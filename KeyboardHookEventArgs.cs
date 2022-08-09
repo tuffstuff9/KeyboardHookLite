@@ -14,8 +14,14 @@ public class KeyboardHookEventArgs : EventArgs
         get; private set;
     }
 
-    public KeyboardHookEventArgs(LowLevelKeyboardInputEvent inputEvent)
+    public KeyPressType KeyPressType
+    {
+        get; private set;
+    }
+
+    public KeyboardHookEventArgs(LowLevelKeyboardInputEvent inputEvent, KeyPressType keyPressType)
     {
         InputEvent = inputEvent;
+        KeyPressType = keyPressType;
     }
 }

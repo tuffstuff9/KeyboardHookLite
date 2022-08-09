@@ -14,15 +14,25 @@ public class KeyboardHook : IDisposable
 {
     public event EventHandler<KeyboardHookEventArgs> KeyboardPressed;
 
+    // We require this to sepcify the type of hook we are setting.
     private const int WH_KEYBOARD_LL = 13;
-    private const int WM_KEYDOWN = 0x0100;
-    private const int WM_SYSKEYDOWN = 0x0104;
+
+    // This enum will be part of the KeyboardHookEventArgs, so that
+    // we know what type of key press it was.
+    public enum KeyPressType
+    {
+        KeyDown = 0x0100,
+        KeyUp = 0x0101,
+        SysKeyDown = 0x0104,
+        SysKeyUp = 0x0105
+    }
 
     private LowLevelKeyboardProc _proc;
     private IntPtr _hookID = IntPtr.Zero;
     private IntPtr _user32LibraryHandle = IntPtr.Zero;
 
 
+    // Constructor to set the hook
     public KeyboardHook()
     {
         _proc = HookCallback;
@@ -32,7 +42,9 @@ public class KeyboardHook : IDisposable
     }
 
 
-    // We have a struct to read the KBDLLHOOKSTRUCT  
+    // We have a struct to read the KBDLLHOOKSTRUCT
+    // (refer to http://pinvoke.net/default.aspx/Structures/KBDLLHOOKSTRUCT.html)
+    // for more information
     public struct LowLevelKeyboardInputEvent
     {
         /// <summary>
@@ -76,37 +88,39 @@ public class KeyboardHook : IDisposable
 
     public IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
     {
-        // We need to convert the KBDLLHOOKSTRUCT into a structure that we can access
-        // You could also do int vkCode = Marshal.ReadInt32(lParam); for just the 
-        // virtual key code.
-        object o = Marshal.PtrToStructure(lParam, typeof(LowLevelKeyboardInputEvent));
 
-        // We cast the object into the desired type (which is LowLevelKeyboardInputEvent)
-        LowLevelKeyboardInputEvent e = (LowLevelKeyboardInputEvent)o;
-
-        KeyboardHookEventArgs eventArgs = new KeyboardHookEventArgs(e);
+        // We must identify the type of keypress this was, so we can pass it into
+        // the event arguments.
+        var wParamType = wParam.ToInt32();
 
 
-        if (nCode >= 0)
+        // We need to ensure the message is of a keypress type (from KeyPressType enum).
+        if (Enum.IsDefined(typeof(KeyPressType), wParamType))
         {
-            // We need to check for keydown and syskeydown because different keys
-            // will trigger either one.
-            if (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN)
-            {
-                EventHandler<KeyboardHookEventArgs> handler = KeyboardPressed;
-                handler?.Invoke(this, eventArgs);
-                // Printing out the wParam to see what type of message we are receiving
-                // Console.WriteLine(wParam);
+            // We need to convert the LowLevelKeyboardInputEvent (KBDLLHOOKSTRUCT) into a
+            // structure that we can access.
+            // You could also do int vkCode = Marshal.ReadInt32(lParam); for just the 
+            // virtual key code.
+            object o = Marshal.PtrToStructure(lParam, typeof(LowLevelKeyboardInputEvent));
 
-                // Printing out the actual keypress
-                // Console.WriteLine(e.Key);
-            }
+            // We cast the object into the desired type (which is LowLevelKeyboardInputEvent).
+            LowLevelKeyboardInputEvent e = (LowLevelKeyboardInputEvent)o;
 
+            // We declare the event arguments
+            KeyboardHookEventArgs eventArgs = new KeyboardHookEventArgs(e, (KeyPressType)wParamType);
+
+            EventHandler<KeyboardHookEventArgs> handler = KeyboardPressed;
+            handler?.Invoke(this, eventArgs);
+
+            // Printing out the wParam to see what type of message we are receiving
+            // Console.WriteLine(wParam);
         }
 
-        return CallNextHookEx(_hookID, nCode, wParam, lParam);
+        // We call the next hook so the next hook in line can receive the message
+        return CallNextHookEx(IntPtr.Zero, nCode, wParam, lParam);
     }
 
+    // Below, we are disposing the unmanaged code to prevent memory leaks.
     protected virtual void Dispose(bool disposing)
     {
         if (disposing)
@@ -144,11 +158,7 @@ public class KeyboardHook : IDisposable
     private static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode,
-        IntPtr wParam, IntPtr lParam);
-
-    [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    private static extern IntPtr GetModuleHandle(string lpModuleName);
+    private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
     [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Ansi)]
     static extern IntPtr LoadLibrary([MarshalAs(UnmanagedType.LPStr)] string lpFileName);
