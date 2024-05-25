@@ -118,6 +118,13 @@ public class KeyboardHook : IDisposable
             EventHandler<KeyboardHookEventArgs> handler = KeyboardPressed;
             handler?.Invoke(this, eventArgs);
 
+            // If the SuppressKeyPress is set to true, we return 1 to suppress the key press.
+            // This is useful for when you want to block a key press from being sent to the application.
+            if (eventArgs.SuppressKeyPress)
+            {
+                return (IntPtr)1;
+            }
+
             // Printing out the wParam to see what type of message we are receiving
             // Console.WriteLine(wParam);
         }
