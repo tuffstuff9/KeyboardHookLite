@@ -19,6 +19,11 @@ public class KeyboardHookEventArgs : EventArgs
         get; private set;
     }
 
+    public bool SuppressKeyPress
+    {
+        get; set;
+    }
+
     public KeyboardHookEventArgs(LowLevelKeyboardInputEvent inputEvent, KeyPressType keyPressType)
     {
         InputEvent = inputEvent;

@@ -88,6 +88,12 @@ public class KeyboardHook : IDisposable
 
     public IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
     {
+        // If nCode is less than 0, it means the callback function must return the value returned by CallNextHookEx.
+        // https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ms644985(v=vs.85)#return-value
+        if (nCode < 0)
+        {
+            return CallNextHookEx(IntPtr.Zero, nCode, wParam, lParam);
+        }
 
         // We must identify the type of keypress this was, so we can pass it into
         // the event arguments.
@@ -111,6 +117,13 @@ public class KeyboardHook : IDisposable
 
             EventHandler<KeyboardHookEventArgs> handler = KeyboardPressed;
             handler?.Invoke(this, eventArgs);
+
+            // If the SuppressKeyPress is set to true, we return 1 to suppress the key press.
+            // This is useful for when you want to block a key press from being sent to the application.
+            if (eventArgs.SuppressKeyPress)
+            {
+                return (IntPtr)1;
+            }
 
             // Printing out the wParam to see what type of message we are receiving
             // Console.WriteLine(wParam);
