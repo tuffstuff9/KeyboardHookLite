@@ -4,6 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
 		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -41,6 +42,8 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+		<None Include="LICENSE.txt" Pack="true" PackagePath=""/>
+
   </ItemGroup>
 
 </Project>
