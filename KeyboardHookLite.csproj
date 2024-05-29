@@ -32,11 +32,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\Desktop\KLlogo.png">
+    <None Include="KLlogo.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\..\..\Desktop\README.md">
+    <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
